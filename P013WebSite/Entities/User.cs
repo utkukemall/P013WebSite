@@ -15,7 +15,7 @@ namespace P013WebSite.Entities
         public string? Phone { get; set; }
         [Display(Name = "Şifre")]
         public string Password { get; set; }
-        [Display(Name = "Eklenme Tarihi")]
+        [Display(Name = "Eklenme Tarihi"), ScaffoldColumn(false)] // ScaffoldColumn Oluşacak viewlarda CreateDate alanının otomatik oluşturulmasını engeller 
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         [Display(Name = "Durum")]
         public bool IsActive { get; set; }
