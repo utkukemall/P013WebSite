@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using P013WebSite.Data;
+using P013WebSite.Entities;
+using P013WebSite.Tools;
+using System.Threading.Tasks;
 
 namespace P013WebSite.Areas.Admin.Controllers
 {
@@ -37,10 +40,13 @@ namespace P013WebSite.Areas.Admin.Controllers
         // POST: SlidersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Slider collection, IFormFile? Image)
         {
             try
             {
+                collection.Image = await FileHelper.FileLoaderAsync(Image);
+                await _context.Sliders.AddAsync(collection);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -50,18 +56,23 @@ namespace P013WebSite.Areas.Admin.Controllers
         }
 
         // GET: SlidersController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var model = await _context.Sliders.FindAsync(id);
+            return View(model);
         }
 
         // POST: SlidersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, Slider collection, IFormFile? Image)
         {
             try
             {
+                if(Image is not null)
+                    collection.Image = await FileHelper.FileLoaderAsync(Image);
+                _context.Sliders.Update(collection); // Entity Frame Work de update ve delete metotları asenkron çalışmıyor add ve listeleme metotları async
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -71,18 +82,21 @@ namespace P013WebSite.Areas.Admin.Controllers
         }
 
         // GET: SlidersController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _context.Sliders.FindAsync(id);
+            return View(model);
         }
 
         // POST: SlidersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, Slider collection)
         {
             try
             {
+                _context.Sliders.Remove(collection);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
