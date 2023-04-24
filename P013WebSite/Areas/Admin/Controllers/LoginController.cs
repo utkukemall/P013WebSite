@@ -1,5 +1,4 @@
-﻿using AspNetCore;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using P013WebSite.Data;
