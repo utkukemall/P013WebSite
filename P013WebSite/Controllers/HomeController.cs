@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P013WebSite.Data;
 using P013WebSite.Models;
 using System.Diagnostics;
 
@@ -6,16 +7,24 @@ namespace P013WebSite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}   // Bunları normalde sildik. Bunun yerine private readonly DatabaseContext _context; satırını yazdık.
+
+        private readonly DatabaseContext _context;  // Sağ tık genarete constructor yaptık
+
+        public HomeController(DatabaseContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = _context.Sliders.ToList();
+            return View(model);
         }
 
         public IActionResult Privacy()

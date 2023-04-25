@@ -1,8 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Slider>
+@{
+    ViewData["Title"] = "Anasayfa";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">P013 Kurumsal Web Site</h1>
+    <p>Asp.Net Core ile geliştirdiğimiz yönetim paneli web sitesi.</p>
+</div>
+
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        @*<div class="carousel-item active">
+            <img src="/Img/manzara.jpg" class="d-block w-100" alt="...">
+        </div>  *@     @*Bu satırı bırakmamızın sebebi active class ı kalsın diye bıraktık. Active class ı sayesinde program hangi slider'ın aktif olduğunu anlıyor*@ @*Bu satırı da silip foreach döngüsünün içine @(item == Model.FirstOrDefault() ? "active" : "")" ekliyoruz.*@  
+       @* Kısacası bu satırı başta silmedik çünkü active class ı programın çalışmasını sağlıyordu fakat sonradan bu satırı da kaldırıp forecah döngüsünün içine @(item == Model.FirstOrDefault() ? "active" : "")" ekledik bu sayede foreach döngüsünün içinde c# kodu yazarak active satırını kaldırabilir hale geldik. Eğer bu şekilde yapmasaydık manzara.jpg her zaman ilk döneceği için web sitesi üzerinden kontrol edemeyeceğimiz bir jpg dönecekti.*@
+        
+        @*<div class="carousel-item">
+            <img src="/Img/manzara2.jpg" class="d-block w-100" alt="...">
+        </div>*@     @*Bu satırı kesip foreach içine yapıştırdık manzara2.jpg kısmını @item.Image haline getirdik *@
+        
+        @*<div class="carousel-item">
+            <img src="/Img/apple-iphone-13-pro-graphite-01.jpg" class="d-block w-100" alt="...">
+        </div>*@    @*Bu satırı sildik*@
+        
+        @foreach (var item in Model)
+        {
+            <div class="carousel-item @(item == Model.FirstOrDefault()? "active" : "")">
+                <img src="/Img/@item.Image" class="d-block w-100" alt="...">
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
