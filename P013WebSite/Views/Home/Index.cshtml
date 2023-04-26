@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Slider>
+﻿@model HomePageViewModel
 @{
     ViewData["Title"] = "Anasayfa";
 }
@@ -24,9 +24,9 @@
             <img src="/Img/apple-iphone-13-pro-graphite-01.jpg" class="d-block w-100" alt="...">
         </div>*@    @*Bu satırı sildik*@
         
-        @foreach (var item in Model)
+        @foreach (var item in Model.Sliders)
         {
-            <div class="carousel-item @(item == Model.FirstOrDefault()? "active" : "")">
+            <div class="carousel-item @(item == Model.Sliders.FirstOrDefault()? "active" : "")">
                 <img src="/Img/@item.Image" class="d-block w-100" alt="...">
             </div>
         }
